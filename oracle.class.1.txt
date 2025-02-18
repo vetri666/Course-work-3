@@ -1,0 +1,141 @@
+my_var Date;
+my_var := SysDate;
+DBMS_OUTPUT.PUT.line(to_char(my_var,'DD-MM-YYYY'));
+
+-----------------
+
+
+topic: load data from DB to a variable and then execute an display
+
+---
+
+--from the table oehr
+
+SELECT *
+FROM oehr_customers
+ 
+-- run and the see the data first
+
+
+SELECT cust_first_name, CUST_LAST_NAME
+FROM oehr_customers -- 319 rows
+
+ ---- my_var can hold only one value in the column and hence we have to mentioned a clause
+
+SELECT cust_first_name, CUST_LAST_NAME
+FROM oehr_customers
+WHERE CUSTOMER_ID=100; 
+
+
+DECLARE
+	var_fname varchar2(40);
+	var_lname varchar2(40);
+	var_cid number :=101;
+
+BEGIN
+--QUERY TO RETRIEVE & STORE DATA INTO A VARIABLE
+
+	SELECT CUST_FIRST_NAME, CUST_LAST_NAME;
+	INTO var_fname, var_lname 
+	FROM oehr_customers
+	WHERE CUSTOMER_ID= var_cid;
+
+--DISPLAY 
+	DBMS_OUTPUT.put_line('First Name: '|| var_fname||' Last Name: '||var_lname);
+
+
+EXCEPTION
+	WHEN NO_DATA_FOUND THEN
+	DBMS_OUTPUT.put_line('No customer '); //  DBMS_OUTPUT.put_line(SQLERRM); -- can have both as well
+
+
+END;
+
+
+
+-----------------------------------------------
+
+--return first name alst name & email of employees with id = 100
+
+DECLARE
+var_fname varchar2(40);
+var_lname varchar2(40);
+var_emailid varchar2(40);
+var_cid number :=100;
+
+
+
+
+BEGIN
+SELECT First_name, Last_name, email address
+INTO var_fname, var_lname , var_emailid
+FROM Employee
+WHERE empid = var_cid;
+
+	DBMS_OUTPUT.put_line('First Name: '|| var_fname||' Last name:||var_name || 'Email ID : '||var_emailid);
+
+EXCEPTION
+
+WHEN NO_DATA_FOUND THEN
+
+DBMS_OUTPUT.put_line('no such customer' || SQLERRM); 
+
+END;
+
+
+---- updating the table with job title 
+
+
+
+DECLARE
+
+var_fname varchar2(40);
+var_lname varchar2(40);
+var_emailid varchar2(40);
+var_jobtitle varchar2(40);
+var_cid number :=100;
+
+
+BEGIN
+
+SELECT First_name, Last_name, email address, jobtitle
+
+INTO var_fname, var_lname , var_emailid, var_jtitle
+
+FROM (Employee) AS e
+
+JOIN Job(tabe) AS j
+
+ON (job_id).j = (emp_id).e
+
+WHERE emp_id = var_cid;
+
+	DBMS_OUTPUT.put_line('First Name: '|| var_fname||' Last name:||var_name || 'Email ID : '||var_emailid || 'Job title: '|| var_jobtitle );
+
+EXCEPTION
+
+WHEN NO_DATA_FOUND THEN
+
+DBMS_OUTPUT.put_line('no such customer' || SQLERRM); 
+
+END;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

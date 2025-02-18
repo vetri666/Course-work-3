@@ -1,0 +1,101 @@
+CREATE OR REPLACE PROCEDURE INSERT_JOB -- no prarameters
+IS -- AS
+
+
+BEGIN
+-- query
+    INSERT INTO oehr_jobs(JOB_ID,JOB_TITLE,MIN_SALARY,MAX_SALARY)
+	VALUES ('HR_ASSIST','HR ASSISTANT',4000,9000);
+	DBMS_OUTPUT.put_line('NEW ROW INSERTED');
+EXCEPTION 
+	WHEN OTHER THEN
+	DBMS_OUTPUT.put_line('SQLERRM');
+   
+END;
+
+SELECT *
+FROM oehr_jobs
+
+-----------------------
+
+Q2 :
+CREATE OR REPLACE PROCEDURE INSERT_JOB_UPDATDED (jid IN varchar2, jtitle IN varchar2, minsal number, maxsal number);
+
+BEGIN 
+
+INSERT INTO oehr_jobs(JOB_ID,JOB_TITLE,MIN_SALARY,MAX_SALARY)
+VALUES (jid,jtitle,minsal,maxsal);
+DBMS_OUTPUT.put_line('NEW ROW INSERTED');
+EXCEPTION 
+WHEN OTHERS THEN 
+DBMS_OUTPUT.put_line('SQLERRM');
+END;
+
+
+--- anonymous block--
+
+DECLARE
+ var_jid varchar(10):='HR_PAYROLL';
+var_jtitle(20):='HUMAM_RESOURCE_PAYROLL';
+var_minsal number:=5000;
+var_maxsal number:=9000;
+
+BEGIN
+
+	Insert_Job_Updated(var_jid,var_jtitle,var_minsal,var_maxsal);
+END;
+
+
+
+-----------------------------
+
+Raise application  error --
+
+CREATE OR REPLACE
+
+
+
+
+SELECT Count (*)
+
+
+raie_application_error('')
+
+
+----------------------------------------------------------
+
+
+
+DELETE FROM OEHR_JOBS
+
+WHEN 
+
+CREATE OR REPLACE PROCEDURE del_job(jid varchar2)
+
+AS 
+
+BEGIN 
+
+DELETE FROM oehr_jobs
+WHERE job_id-jid
+
+IF SQL %ROWCOUNT=0 THEN
+DBMS_OUTPUT.put_line('No job with this id!');
+ELSE
+DBMS_OUTPUT.put_line('Delete successful!');
+END IF;
+END;
+
+BEGIN nv n
+
+
+
+
+
+
+
+
+
+
+
+

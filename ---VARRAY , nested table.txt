@@ -1,0 +1,335 @@
+---VARRAY
+
+DECLARE 
+--define VARRAY
+
+TYPE t_student_fname IS VARRAY(3) OF varchar2(20);
+
+--define a variable with the type varray
+
+----  v_names t_students_fname:= t_student_fname(); --- empty array
+v_names t_students_fname:= t_student_fname('alex', 'emma', 'rob',);
+
+BEGIN
+DBMS_OUTPUT.put_line('the number of elements in my varray is' || v_names.COUNT); --(will dispay the total count of elements in the array)
+---DBMS_OUTPUT.put_line('the number of elements in my varray is' || v_names(2)); --- v_names(1); will display the first index in the array
+DBMS_OUTPUT.put_line(v_names(3));
+END;
+
+
+
+-------VARRAY OF RECORDS
+
+DELCARE 
+
+--define a record
+
+TYPE rec_employy IS RECORD(
+
+    fname varchar2(30),
+    lname oehr_employee.LAST_NAME%TYPE,
+    email oehr_employee.email%TYPE,
+);
+ 
+----define a varray of employee record
+
+TYPE t_employee IS VARRAY(10) OF rec_employee;
+
+--define variable
+v_employee t_employee:= t_employee();
+
+BEGIN 
+
+--add an element
+v_employee.EXTEND; --DBMS to assign memory space to hold that element
+
+---add values to that element
+
+v_employee(v_employee.LAST).fname:='Emma';
+v_employee(v_employee.LAST).fname:='Rob';
+v_employee(v_employee.LAST).fname:='E@3.com';
+
+
+--add element 2
+v_employee.EXTEND;
+
+v_employee(v_employee.LAST).fname:='alex';
+v_employee(v_employee.LAST).fname:='john';
+v_employee(v_employee.LAST).fname:='A@3.com';
+--display 
+
+DBMS_OUTPUT.putline(v_employee.COUNT);
+DBMS_OUTPUT.putline(v_employee.(2).fname);
+END;
+
+
+
+------------------ EXAMPLE 3 VARRAY/RECORD with CURSOR
+
+
+DELCARE 
+
+--define a record
+
+TYPE rec_employy IS RECORD(
+
+    fname varchar2(30),
+    lname oehr_employee.LAST_NAME%TYPE,
+    email oehr_employee.email%TYPE,
+);
+
+---define a varray of employee record
+
+TYPE t_employee IS VARRAY(10) OF rec_employee;
+
+--define variable
+v_employee t_employee:= t_employee();
+
+--define cursor
+CURSOR c_employee IS
+SELECT First_name, LAst_name, email
+FROM oehr_employees
+FETCH FIRST 5 ROWS ONLY;  
+
+BEGIN
+FOR my_data IN c_employee
+ LOOP
+
+--extend
+v_employee.EXTEND;
+
+-assign values
+v_employee(v_employee.LAST).fname:= my_data.First_name;
+v_employee(v_employee.LAST).fname:= my_data.last_name;
+v_employee(v_employee.LAST).fname:= my_data.email;
+
+END LOOP;
+
+DBMS_OUPUT.put_line(v_employee.COUNT)
+
+END;
+
+-----
+
+for my_index IN v_employee.FIRST..v_employee.LAST ---
+LOOP
+DBMS_OUPUT.put_line(v_employee.(my_index).fname);
+DBMS_OUPUT.put_line(v_employee.(my_index).lname);
+DBMS_OUPUT.put_line(v_employee.(my_index).email);
+END LOOP
+END;
+
+
+-------------------
+
+
+------------NESTED TABLE----------
+
+DECLARE 
+
+----define a NESTED TABLE
+
+TYPE n_emp_fname IS TABLE OF oehr.employees.First_name%TYPE;
+
+----declare a variable of n_emp_fname
+
+v_emp_fname n_emp_fname:= n_emp_fname();
+BEGIN
+ FOR c_emp IN (SELECT first_name 
+    FROM oehr_employees
+    FETCH FIRST 10 ROWS ONLY)
+ LOOP
+v_emp_fname.EXTEND;
+
+v_emp_fname(v_emp_fname.LAST):= c_emp.first_name;
+
+ END LOOP;
+--display all the names
+FOR my_index IN v_emp_fname.FIRST..v_emp_fname.LAST
+LOOP
+    DBMS_OUTPUT.put_line(v_emp_fname(my_index));
+    END LOOP;
+
+
+------define a varray and filled with data from the oehr_employes : firstname
+--varray has a maximum for 20 elements
+
+
+-------------VARRAY
+
+DECLARE 
+--define VARRAY
+
+TYPE t_student_fname IS VARRAY(3) OF varchar2(20);
+
+--define a variable with the type varray
+
+----  v_names t_students_fname:= t_student_fname(); --- empty array
+v_names t_students_fname:= t_student_fname('alex', 'emma', 'rob',);
+
+BEGIN
+DBMS_OUTPUT.put_line('the number of elements in my varray is' || v_names.COUNT); --(will dispay the total count of elements in the array)
+---DBMS_OUTPUT.put_line('the number of elements in my varray is' || v_names(2)); --- v_names(1); will display the first index in the array
+DBMS_OUTPUT.put_line(v_names(3));
+END;
+
+
+
+-------VARRAY OF RECORDS
+
+DELCARE 
+
+--define a record
+
+TYPE rec_employy IS RECORD(
+
+    fname varchar2(30),
+    lname oehr_employee.LAST_NAME%TYPE,
+    email oehr_employee.email%TYPE,
+);
+ 
+----define a varray of employee record
+
+TYPE t_employee IS VARRAY(10) OF rec_employee;
+
+--define variable
+v_employee t_employee:= t_employee();
+
+BEGIN 
+
+--add an element
+v_employee.EXTEND; --DBMS to assign memory space to hold that element
+
+---add values to that element
+
+v_employee(v_employee.LAST).fname:='Emma';
+v_employee(v_employee.LAST).fname:='Rob';
+v_employee(v_employee.LAST).fname:='E@3.com';
+
+
+--add element 2
+v_employee.EXTEND;
+
+v_employee(v_employee.LAST).fname:='alex';
+v_employee(v_employee.LAST).fname:='john';
+v_employee(v_employee.LAST).fname:='A@3.com';
+--display 
+
+DBMS_OUTPUT.putline(v_employee.COUNT);
+DBMS_OUTPUT.putline(v_employee.(2).fname);
+END;
+
+
+
+------------------ EXAMPLE 3 VARRAY/RECORD with CURSOR
+
+
+DELCARE 
+
+--define a record
+
+TYPE rec_employy IS RECORD(
+
+    fname varchar2(30),
+    lname oehr_employee.LAST_NAME%TYPE,
+    email oehr_employee.email%TYPE,
+);
+
+---define a varray of employee record
+
+TYPE t_employee IS VARRAY(10) OF rec_employee;
+
+--define variable
+v_employee t_employee:= t_employee();
+
+--define cursor
+CURSOR c_employee IS
+SELECT First_name, LAst_name, email
+FROM oehr_employees
+FETCH FIRST 5 ROWS ONLY;  
+
+BEGIN
+FOR my_data IN c_employee
+ LOOP
+
+--extend
+v_employee.EXTEND;
+
+-assign values
+v_employee(v_employee.LAST).fname:= my_data.First_name;
+v_employee(v_employee.LAST).fname:= my_data.last_name;
+v_employee(v_employee.LAST).fname:= my_data.email;
+
+END LOOP;
+
+DBMS_OUPUT.put_line(v_employee.COUNT)
+
+END;
+
+-----
+
+for my_index IN v_employee.FIRST..v_employee.LAST ---
+LOOP
+DBMS_OUPUT.put_line(v_employee.(my_index).fname);
+DBMS_OUPUT.put_line(v_employee.(my_index).lname);
+DBMS_OUPUT.put_line(v_employee.(my_index).email);
+END LOOP
+END;
+
+
+-------------------
+
+
+------------NESTED TABLE----------
+
+DECLARE 
+
+----define a NESTED TABLE
+
+TYPE n_emp_fname IS TABLE OF oehr.employees.First_name%TYPE;
+
+----declare a variable of n_emp_fname
+
+v_emp_fname n_emp_fname:= n_emp_fname();
+BEGIN
+ FOR c_emp IN (SELECT first_name 
+    FROM oehr_employees
+    FETCH FIRST 10 ROWS ONLY)
+ LOOP
+v_emp_fname.EXTEND;
+
+v_emp_fname(v_emp_fname.LAST):= c_emp.first_name;
+
+ END LOOP;
+--display all the names
+FOR my_index IN v_emp_fname.FIRST..v_emp_fname.LAST
+LOOP
+    DBMS_OUTPUT.put_line(v_emp_fname(my_index));
+    END LOOP;
+
+
+------define a varray and filled with data from the oehr_employes : firstname
+--varray has a maximum for 20 elements
+
+DECLARE
+
+TYPE arr_fname_emp IS VARRAY (20) OF varchar2(50);
+var_emp array_emp:= array_emp()
+
+
+ CURSOR cursor_emp IS (SELECT First_NAME
+    FROM oehr_employee 
+    FETCH NEXT 20 ROWS ONLY);
+
+    BEGIN
+    FOR my_iterator IN cursor_emp
+LOOP
+
+var_emp.EXTEND;
+var_emp(var_emp.LAST) := cursor_emp.FIRST_NAME;
+END LOOP;
+DBMS_OUTPUT.put_line(var_emp.COUNT);
+FOR i IN var_emp.FIRST..var_emp.LAST LOOP
+DBMS_OUTPUT.put_line(var_emp.(i));
+END LOOP;
+END;

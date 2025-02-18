@@ -1,0 +1,181 @@
+---cusors
+--exp:1- return all employee's first name 
+
+---Anonymous block with cursor
+
+DECLARE
+
+fname varchar2 (30); 
+-----/// fname_oehr_employees.FIRST_NAME%TYPE ( this automtically reads the data type)
+lanme varchar(30);
+---cursor declaration
+CURSOR c_emp_name IS
+SELECT FIRST_NAME, LAST_NAME FROM oehr_employees;
+
+
+BEGIN
+
+--opening the cusor
+OPEN c_emp_name;
+LOOP
+----load data in to the variable
+FETCH c_emp_name INTO fname,lname;
+
+IF c_emp_name%NOTFOUND THEN
+EXIT;
+END IF;
+
+--display 
+DBMS_OUTPUT.put_line(fname||lname);
+
+END LOOP
+
+---Closing cursor
+CLOSE c_emp_name;
+END;
+
+
+------------- USE OF RECORDS
+
+DECLARE 
+
+---define record type
+TYPE rec_emp_name IS RECORD(
+    fname oehr_employee.FIRST_NAME%TYPE,
+    lname oehr_employee.LAST_NAME%TYPE,
+    sal oehr_employee.Salary%TYPE,
+);
+
+
+--define varioables of type rec_emp_name
+my_var rec_emp_name;
+
+---define the cursor
+CURSOR c_emp_details IS
+SELECT first_name,last_name,salary FROM oehr.employees;
+
+
+BEGIN
+
+OPEN c_emp_details;
+LOOP
+FETCH c_emp_details INTO my_var;
+IF c_emp_details%NOTFOUND THEN
+EXIT;
+END IF;
+
+DBMS.OUTPUT_print.line(my_var.fname ||''||my_var.lname ||''||my_var.sal);
+
+END LOOP;
+CLOSE c_emp_details;
+END;
+
+------------------
+
+
+---------------RETURN AL COLUMNS --- USE %ROWTYPE
+
+
+DECLARE
+--define cursor
+CURSOR c_job IS
+
+SELECT *
+FROM oehr_jobs;
+
+----define variable to hold the full row : %ROWTYPE
+var_jobs oehr_jobs%ROWTYPE;
+
+BEGIN
+OPEN c_jobs;
+LOOP
+FETCH c_jobs INTO var_jobs;
+IF c_jobs%NOTFOUND THEN ---- also can us EXIT WHEN c_jobs %NOTFOUND instead of IF and THEN and EXIT
+EXIT ;
+END IF;
+DBMS.OUTPUT_put.line(var_jobs.JOB_ID ||''|| var_jobs.JOB_TITLE ||''|| var_jobs.MIN_SALARY ||''|| var_jobs.MAX_SALARY);
+
+END LOOP;
+
+CLOSE c_jobs;
+
+END;
+-----------------------------------
+
+
+DECLARE 
+TYPE rec_table1 IS RECORD(
+cid oehr_customer.CUSTOMER_ID%TYPE;
+fname oehr_customer.CUSTOMER_ID%TYPE;
+lname oehr_customer.CUSTOMER_ID%TYPE;
+city oehr_customer.CUSTOMER_ID%TYPE;
+);
+my_rec 
+ CURSOR c_table IS
+ SELECT CUSTOMER_ID, CUST_FIRST_NAME,CUST_LAST_NAME, CITY
+ FROM oehr_customers;
+
+BEGIN
+        OPEN c_table;
+LOOP
+FETCH c_table INTO cid,fname,lname,city;
+        IF c_table %NOTFOUND THEN
+EXIT;
+END IF;
+
+        DBMS_OUTPUT.put_line(cid || fname || lname||city );
+END LOOP;
+CLOSE c_table;
+
+END;
+
+-------------------------
+
+DECLARE
+TYPE rec_table1 IS RECORD(
+pid oehr_Product_Information%TYPE;
+ oehr_Product_Information%TYPE;
+ oehr_Product_Information%TYPE;
+);
+
+my_rec rec_table1;
+
+CURSOR table_1 IS
+SELECT PRODUCT_ID, 
+FROM oehr_Product_Information;
+
+BEGIN
+OPEN table_1;
+LOOP
+FETCH pid,  INTO my_rec;
+EXIT WHEN table_1 %NOTFOUND;
+DBMS...
+END LOOP
+CLOSE table_1;
+END;
+-----------------------------
+
+
+
+DECLARE
+city1 varchar2(100),
+ CURSOR c_city IS;
+ SELECT DISTINCT CITY
+ FROM oehr_customers;
+
+ BEGIN
+ LOOP
+ OPEN c_city;
+ FETCH city1 INTO CITY;
+ EXIT WHEN city1 %NOTFOUND;
+ DBMS_OUTPUT.put_line(c_city);
+ END LOOP;
+ CLOSE c_city;
+ END;
+
+-------------------------------
+
+
+
+
+
